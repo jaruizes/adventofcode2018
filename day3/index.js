@@ -45,11 +45,9 @@ const setBoard = () => {
     });
 
     rl.on('close', () => {
-        const idNotOverlap = idboard.find((item) => {
-            return (item.overlap === false);
-        });
+        const idNotOverlap = idboard.filter(item => !item.overlap);
         console.log(`Overlaps: ${overlapsArray.size}`);
-        console.log(`idNotOverlap: ${idNotOverlap.id}`);
+        console.log(`idNotOverlap: ${idNotOverlap[0].id}`);
     });
 };
 
@@ -66,7 +64,8 @@ const addCoordinate = (id, coord) => {
 };
 
 const searchClaimsAffected = (coord) => {
-    idboard.forEach((item) => {
+    const notOverlapped = idboard.filter(item => !item.overlap);
+    notOverlapped.forEach((item) => {
         if (item.coordinates.has(coord)) {
             item.overlap = true;
         }
